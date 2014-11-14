@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha" edgetheme="Martha">
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="IDLE"/>
+   <type name="Int"/>
+   <type name="Java"/>
+   <type name="Python"/>
+   <type name="Ruby"/>
+   <type name="String"/>
+   <type name="Task"/>
+   <type name="univ"/>
+   <type name="ordering/Ord"/>
+   <type name="seq/Int"/>
+</node>
+
+<node color="Green">
+   <type name="Scheduler"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="onCPU"> <type name="Scheduler"/> <type name="Task"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

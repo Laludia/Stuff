@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha">
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Aruba"/>
+   <type name="Grenada"/>
+   <type name="Hamster"/>
+   <type name="Int"/>
+   <type name="Jamaica"/>
+   <type name="K180"/>
+   <type name="K191"/>
+   <type name="K233"/>
+   <type name="K61"/>
+   <type name="K63"/>
+   <type name="Parrot"/>
+   <type name="Pig"/>
+   <type name="Snake"/>
+   <type name="StMartin"/>
+   <type name="String"/>
+   <type name="Tarantula"/>
+   <type name="Tobago"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+</node>
+
+<node color="Blue">
+   <type name="Nasir"/>
+</node>
+
+<node color="Gray">
+   <type name="Ryder"/>
+</node>
+
+<node color="Green">
+   <type name="Marcus"/>
+</node>
+
+<node color="Red">
+   <type name="Nataly"/>
+</node>
+
+<node color="Yellow">
+   <type name="Celeste"/>
+</node>
+
+<node visible="no">
+   <type name="Amount"/>
+   <type name="Animal"/>
+   <type name="Island"/>
+   <type name="open$2/Ord"/>
+   <type name="open$3/Ord"/>
+   <type name="ordering/Ord"/>
+</node>
+
+<node visible="yes">
+   <type name="Person"/>
+</node>
+
+<edge visible="no" attribute="yes">
+   <relation name="pet"> <type name="Person"/> <type name="Animal"/> </relation>
+   <relation name="property"> <type name="Person"/> <type name="Island"/> </relation>
+   <relation name="salary"> <type name="Person"/> <type name="Amount"/> </relation>
+</edge>
+
+</view>
+
+</alloy>

@@ -1,0 +1,74 @@
+/*
+ * Number of processes, including init.
+ */
+#define NPROC 4
+
+/*
+ * want_cs[i] is true <-> process with pid = i wants to enter its CS.
+ * This array is used to gain or deny access to the CS.
+ */
+bool want_to_eat[NPROC] = false ;
+
+/*
+ * in_cs[i] is true <-> process with pid = i is *in* its CS.
+ * (for 1 <= i < NPROC)
+ */
+bool eating[NPROC] = false ;
+
+/*
+ * Pseudo-type semaphore
+ */
+
+#define semaphore byte
+
+/*
+ * Mutual exclusion semaphore (forks for 4 [NPROC]).
+ */
+semaphore fork[NPROC] = 1 ;
+
+/*
+ * Up and down functions on semaphores.
+ * down blocks if the semaphore is 0 on entry.
+ * 1)intial value for "semaphore mutex = 1" will go to 0
+ * 2) after going through it again it'll be back to 1
+ */
+inline up(s)    { s++ }
+inline down(s)  { atomic{ s > 0 ; s-- } }
+
+/*
+ * Forever process (2 copies)
+ */
+active[4] proctype Phil() {  //running 4 processes (active[4])
+    byte me = _pid ;
+
+	do
+	::
+		/*
+		 * Philosophers aren't eating (thinking, talking, etc)
+		 */
+		skip ;
+
+	    /*
+         * ENTER CRITICAL SECTION - Get both forks
+         */
+        want_to_eat[me] = true ;
+        printf("P%d wants to chow...\n", me);
+        down(fork[me]);  //Phil has fork indexed by [me]
+        down(fork[(me + 1) % NPROC]);  
+          //other fork - circular buffer (pointer +1mod[size in index]
+        want_to_eat[me] = false ;  //eating not "want_to_eat" after getting both forks
+
+		/*
+	     * IN CRITICAL SECTION -- 1 at a time
+		 */
+		eating[me] = true ;
+        printf("P %d is eating!\n", me) ;
+		eating[me] = false ;
+
+		/*
+		 * EXIT CRITICAL SECTION
+		 */
+         up(fork[me]);  //Phil gives up fork indexed by [me]
+         up(fork[(me + 1) % NPROC]); //gives up 2nd fork
+	od ;
+}

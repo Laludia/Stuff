@@ -1,0 +1,44 @@
+#line 1 "Sleepingbarber"
+#line 2 "Sleepingbarber"
+#line 3 "Sleepingbarber"
+
+
+#line 6 "Sleepingbarber"
+
+#line 13 "Sleepingbarber"
+                                                                                                                                                             
+sema mutex = 1;
+
+                       
+sema next_customer = 0;
+sema haircut_done = 0;
+sema waiting = 0;
+
+                 
+
+byte haircut = 255; 
+byte wchair[2] = 255; 
+
+proctype Customer (byte me){
+
+    do
+    ::
+        printf("C%d enters\n", me);
+        down(mutex);
+        if
+        :: haircut == 255 ->
+            printf("C%d does not have to wait\n");
+            skip;
+        :: else ->
+            chair[next] = me;
+            print("C%d sits in chair %d\n", me, next);
+            next = (next + 1) % NCHAIRS;
+            nwaiting++;
+
+            up(mutex);
+            down(cut_wait[me]);
+        fi
+                                                             
+        haircut = me;
+        printf("C%d sits in the barber chair\n", me);
+        up(in_chair);

@@ -1,0 +1,48 @@
+#define NCUSTS 3 //number of customers is 3
+#define NWCHAIRS 2 //number of waiting chairs
+
+//need ordering for waiting chair (fairness)
+#define NOBODY 255   //nobody in waiting chair
+
+/*defining semaphore mutex(lock) and its operations
+#define sema byte //psuedo-type
+
+#define up(s) <s++;}
+#define down(s) {atomic{s > 0 ; s --}}
+
+/*mutual exclusion semaphore*/
+sema mutex = 1;
+
+/*blocking semaphore */
+sema next_customer = 0;
+sema haircut_done = 0;
+sema waiting = 0;
+
+/*SHARED STATE */
+
+byte haircut = NOBODY; //initially nobody is getting haircut
+byte wchair[NWCHAIRS] = NOBODY; //initializes everything on away to NOBODY
+
+proctype Customer (byte me){
+
+    do
+    ::
+        printf("C%d enters\n", me);
+        down(mutex);
+        if
+        :: haircut == NOBODY ->
+            printf("C%d does not have to wait\n");
+            skip;
+        :: else ->
+            chair[next] = me;
+            print("C%d sits in chair %d\n", me, next);
+            next = (next + 1) % NCHAIRS;
+            nwaiting++;
+
+            up(mutex);
+            down(cut_wait[me]);
+        fi
+        /*I have the lock, have it or barber gives the lock*/
+        haircut = me;
+        printf("C%d sits in the barber chair\n", me);
+        up(in_chair);
